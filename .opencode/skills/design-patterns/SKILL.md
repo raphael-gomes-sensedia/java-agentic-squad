@@ -5,14 +5,13 @@ description: Padrões de projeto e boas práticas de código estabelecidas para 
 
 # Design Patterns e Boas Práticas — Java 25 / Spring
 
-Este documento complementa a skill `hexagonal-architecture` (que define *onde* cada
-coisa mora) descrevendo *como* implementar bem dentro de cada camada. Está
-organizado em duas partes:
+## Quando usar
+Use ao implementar casos de uso, ao revisar código, ou ao decidir como resolver algo não coberto explicitamente pela especificação técnica. Complementa a skill `hexagonal-architecture` (que define *onde* cada coisa mora) descrevendo *como* implementar bem dentro de cada camada; destina-se ao time de desenvolvimento backend Java 25 + Spring + PostgreSQL.
 
-- **Parte A — Boas práticas estabelecidas**: base fixa, validada pela comunidade (Effective Java, GoF, Clean Code, práticas idiomáticas de Spring). Use como padrão até haver uma convenção própria do time que a substitua.
-- **Parte B — Padrões do time**: seção reservada, inicialmente vazia, para registrar decisões e convenções específicas do time de desenvolvimento conforme forem definidas. Sempre que houver conflito, **Parte B prevalece sobre a Parte A**.
+O conteúdo está organizado em duas partes: **Parte A — Boas práticas estabelecidas** (base fixa, validada pela comunidade: Effective Java, GoF, Clean Code, práticas idiomáticas de Spring) e **Parte B — Padrões do time** (seção reservada para convenções específicas do time). Sempre que houver conflito, **Parte B prevalece sobre a Parte A**.
 
----
+## Instruções (passo a passo)
+Ao implementar ou revisar código, aplique as regras na ordem em que aparecem: comece pelos princípios gerais (seção 1), consulte os padrões por categoria — criacionais (seção 2), estruturais (seção 3), comportamentais (seção 4) —, aplique as regras de tratamento de exceções (seção 5), validação (seção 6), injeção de dependência (seção 7), persistência (seção 8) e transações (seção 9), garanta os padrões de teste (seção 10) e finalize com o checklist de code smells (seção 13) para detectar violações. Se um comportamento necessário não estiver coberto, proponha-o e registre-o na Parte B conforme o template da seção final.
 
 # PARTE A — Boas práticas estabelecidas
 
@@ -65,7 +64,7 @@ public class ProcessarPagamentoUseCase {
 
     public void executar(PagamentoCommand command) {
         validarValor(command.valor());
-        
+
         var cliente = clienteRepository.buscarPorId(command.clienteId())
             .orElseThrow(() -> new ClienteNaoEncontradoException(MSG_CLIENTE_NAO_ENCONTRADO));
 
@@ -78,13 +77,13 @@ public class ProcessarPagamentoUseCase {
         }
     }
 }
+```
 
 ## 2. Padrões criacionais
 
 ### 2.1 Static Factory Method / Builder
 
-- Para entidades de domínio com múltiplos campos ou regras de criação, preferir um **factory method estático nomeado** (`Pedido.criar(...)`) a um construtor público
-  genérico — o nome comunica a intenção e é o lugar natural para validar invariantes.
+- Para entidades de domínio com múltiplos campos ou regras de criação, preferir um **factory method estático nomeado** (`Pedido.criar(...)`) a um construtor público genérico — o nome comunica a intenção e é o lugar natural para validar invariantes.
 - Para objetos com muitos campos opcionais (ex.: filtros de busca, requests complexos), usar **Builder** (manual ou via `record` com métodos `with*` que retornam nova instância).
 
 ```java
@@ -261,3 +260,14 @@ Esta seção começa vazia. Conforme o time de desenvolvimento definir convenç�
 ```
 
 *(nenhuma entrada registrada até o momento)*
+
+---
+
+## Resultado esperado
+Código implementado conforme as regras das Partes A e B, sem nenhum dos code smells do checklist da seção 13, com cobertura de teste cobrindo todos os cenários de regra de negócio da especificação (caminho feliz, bordas, exceções). Em revisões, o resultado é um laudo apontando cada violação pelo identificador do checklist (ex.: S11) com o trecho afetado e a regra correspondente deste documento.
+
+## Exemplos
+Os exemplos de aplicação estão embutidos nas próprias seções de regra: formatação e extração de constantes na seção 1.2 (Java), factory method em `record` na seção 2.1, e interface de Strategy na seção 4.1. Ao revisar código, compare o trecho suspeito com esses exemplos antes de apontar a violação.
+
+## Restrições
+Não substituir uma regra da Parte A sem registro prévio na Parte B — se houver entrada na Parte B, ela prevalece. Não aplicar regras desta skill fora de projetos Java 25 + Spring do time. Não assumir que um padrão aqui descrito é obrigatório quando a seção marca opcionalidade (ex.: Facade, Virtual Threads, Chain of Responsibility); em caso de dúvida, prefira a solução mais simples (KISS). Não misturar com as regras de estrutura de pacotes — essas pertencem à skill `hexagonal-architecture`.

@@ -224,7 +224,7 @@ Quando uma ação de negócio dispara efeitos colaterais em outros contextos (ex
 
 ---
 
-## 13. Checklist de code smells (para uso na Fase 3 — code review)
+## 13. Checklist de code smells (para uso no code review)
 
 | # | Smell | Como identificar | Por que é um problema |
 |---|---|---|---|

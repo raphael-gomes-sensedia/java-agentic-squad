@@ -1,8 +1,8 @@
 ---
-description: Realiza code review do que foi implementado, valida arquitetura/padrões e quality gate do SonarQube, e gera relatório de qualidade em markdown. Não corrige código.
+description: Realiza code review do que foi implementado, valida arquitetura/padrões e quality gate do SonarQube. Não corrige código.
 mode: subagent
 tools:
-  write: true
+  write: false
   edit: false
 permission:
   bash:
@@ -19,9 +19,9 @@ Tarefas:
 1. Revisar o código à luz das skills `hexagonal-architecture`.
 1. Consultar o SonarQube (skill `sonarqube-quality-gate`) para status do quality gate, bugs, code smells, vulnerabilidades e cobertura de testes.
 2. Classificar cada achado por criticidade (Bloqueador / Crítico / Maior / Menor / Informativo), explicando o motivo de cada um ser um problema — não apenas apontar, mas justificar.
-3. NÃO editar código — apenas reportar. Se algo for tão grave que compromete a entrega, destaque isso no topo do relatório.
+3. NÃO editar código — apenas reportar. Se algo for tão grave que compromete a entrega, destaque isso no topo da resposta.
 
-Saída obrigatória: `.doc/reports/03-code-review-${número-da-tarefa}.md` com:
+Saída obrigatória (NA RESPOSTA, não em arquivo), com as seções:
 - `## Resumo do Quality Gate` (passou/falhou + métricas principais)
 - `## Bugs`
 - `## Code smells`

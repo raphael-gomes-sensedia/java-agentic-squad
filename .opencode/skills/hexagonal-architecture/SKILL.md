@@ -6,7 +6,7 @@ description: Regras de arquitetura hexagonal (ports & adapters) adotadas no proj
 # Arquitetura Hexagonal — Regras de Validação
 
 ## Quando usar
-Use ao validar especificação técnica (Fase 1), ao implementar código (Fase 2, junto da skill `design-patterns`), ou ao revisar código (Fase 3). É a referência única de "o que é correto" em arquitetura hexagonal (ports & adapters) neste projeto, destinada ao time de desenvolvimento e ao subagente `spec-validator`; qualquer validação, implementação ou review deve usar exatamente estas regras — não infira convenções alternativas.
+Use ao validar especificação técnica, ao implementar código (junto da skill `design-patterns`), ou ao revisar código. É a referência única de "o que é correto" em arquitetura hexagonal (ports & adapters) neste projeto, destinada ao time de desenvolvimento e ao subagente `spec-validator`; qualquer validação, implementação ou review deve usar exatamente estas regras — não infira convenções alternativas.
 
 ## Instruções (passo a passo)
 Na validação de especificação, siga a sequência da seção 8; na implementação, use as seções 2, 4 e 5 como guia de onde criar cada classe; no code review, reaplique o checklist da seção 7 sobre o código efetivamente implementado, não apenas sobre a spec. As regras detalhadas seguem nas seções numeradas abaixo.
@@ -156,12 +156,12 @@ Ao validar uma especificação técnica, siga esta sequência:
   **Sugestão** (opcional, não aplicar automaticamente): [ajuste recomendado]
 ```
 
-6. Nunca "corrigir" a especificação nesta fase — apenas reportar. A decisão de ajustar a spec é do desenvolvedor.
+6. Nunca "corrigir" a especificação durante a validação — apenas reportar. A decisão de ajustar a spec é do desenvolvedor.
 
 ---
 
 ## Resultado esperado
-Depende da fase: na Fase 1 (validação), um laudo listando cada violação encontrada com o formato da seção 8 (item 5), sem alterar a especificação; na Fase 2 (implementação), código com todas as classes nos pacotes e com os nomes definidos nas seções 2 e 4; na Fase 3 (code review), checklist da seção 7 aplicado integralmente, com cada violação apontada pelo identificador (ex.: V4) e o trecho afetado. O resultado só é considerado aprovado quando nenhuma violação bloqueante (setas apontando para dentro do domínio, anotações de infraestrutura no domínio, Entity JPA em assinatura de Port) permanece.
+Depende do contexto de uso: na validação de especificação, a lista de cada violação encontrada com o formato da seção 8 (item 5), sem alterar a especificação; na implementação, código com todas as classes nos pacotes e com os nomes definidos nas seções 2 e 4; no code review, checklist da seção 7 aplicado integralmente, com cada violação apontada pelo identificador (ex.: V4) e o trecho afetado. O resultado só é considerado aprovado quando nenhuma violação bloqueante (setas apontando para dentro do domínio, anotações de infraestrutura no domínio, Entity JPA em assinatura de Port) permanece.
 
 ---
 
